@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض الملفات</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>الملفات المرفوعة</h1>
+        <div id="file-list"></div>
+        <a href="upload.html" class="nav-link">رفع ملفات</a>
+    </div>
+    <script>
+        async function fetchFiles() {
+            const response = await fetch('/files');
+            const files = await response.json();
+            const fileList = document.getElementById('file-list');
+            files.forEach(file => {
+                const link = document.createElement('a');
+                link.href = `/download/${file.filename}`;
+                link.textContent = file.originalname;
+                link.className = 'file-link';
+                fileList.appendChild(link);
+                fileList.appendChild(document.createElement('br'));
+            });
+        }
+
+        fetchFiles();
+    </script>
+</body>
+</html>
